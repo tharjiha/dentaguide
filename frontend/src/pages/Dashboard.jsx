@@ -126,7 +126,6 @@ export default function Dashboard() {
                 { val: trends.latest_streak, label: 'Streak' },
                 { val: trends.total_checkins, label: 'Check-ins' },
                 { val: `${trends.brush_rate}%`, label: 'Brush rate' },
-                ...(trends.avg_dental_score > 0 ? [{ val: trends.avg_dental_score, label: 'Avg score' }] : []),
               ].map(s => (
                 <div key={s.label} style={{
                   background: 'rgba(255,255,255,.08)',

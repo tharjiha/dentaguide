@@ -94,7 +94,6 @@ async def submit_checkin(
         "risk_flags":       results["risk_flags"],
         "risk_explanation": results["risk_explanation"],
         "coach_tip":        results["coach_tip"],
-        "dental_score":     results["dental_score"],
         "photo_url":        photo_url,
     }
     print("Final photo_url:", photo_url)
@@ -124,6 +123,33 @@ async def get_checkin_history(user_id: str = Depends(get_current_user)):
     )
     return res.data or []
 
+@app.patch("/api/profile/me")
+async def update_profile(
+    data: dict,
+    user_id: str = Depends(get_current_user)
+):
+    result = supabase.table("profiles") \
+        .update(data) \
+        .eq("user_id", user_id) \
+        .execute()
+    
+    if not result.data:
+        raise HTTPException(status_code=404, detail="Profile not found")
+    
+    return result.data[0]
+
+@app.get("/api/profile/me")
+async def get_profile_me(user_id: str = Depends(get_current_user)):
+    result = supabase.table("profiles") \
+        .select("*") \
+        .eq("user_id", user_id) \
+        .execute()
+    
+    if not result.data:
+        raise HTTPException(status_code=404, detail="Profile not found")
+    
+    return result.data[0]
+
 
 @app.get("/api/dashboard")
 async def get_dashboard(user_id: str = Depends(get_current_user)):
@@ -139,7 +165,7 @@ async def get_dashboard(user_id: str = Depends(get_current_user)):
     )
     history = (
         sb.table("check_ins")
-        .select("dental_score, created_at, symptoms, sugar_intake")
+        .select("created_at, symptoms, sugar_intake")
         .eq("user_id", user_id).order("created_at", desc=True).limit(30).execute()
     )
 

@@ -172,13 +172,7 @@ async def run_pipeline(payload, profile: dict, history: list) -> dict:
     else:
         coach_tip = "Every habit you build now prevents costly treatment later. Small consistent steps make the biggest difference."
 
-    # ── Dental score ──────────────────────────────────────────────────────────
-    base          = 60
-    habit_bonus   = habit_result["habit_score"] * 3
-    risk_penalty  = {"none": 0, "low": 5, "medium": 15, "high": 25}
-    photo_penalty = {"none": 0, "low": 3, "medium": 8, "high": 15}.get(photo_risk, 0) if photo_analysis else 0
-    score = min(100, max(0, base + habit_bonus - risk_penalty.get(risk_severity, 0) - photo_penalty))
-
+    
     # ── Photo result field ────────────────────────────────────────────────────
     photo_result = None
     if photo_analysis:

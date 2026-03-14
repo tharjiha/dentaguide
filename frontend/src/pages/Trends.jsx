@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { getTrends } from '../api/checkins';
 
-const SUGAR_COLORS  = { Low: 'var(--teal)', Med: 'var(--warn)', High: 'var(--danger)' };
-const RISK_COLORS   = { none: 'var(--teal)', low: 'var(--teal)', medium: 'var(--warn)', high: 'var(--danger)' };
-const RISK_BG       = { none: 'var(--teal-l)', low: 'var(--teal-l)', medium: 'var(--warn-bg)', high: 'var(--danger-bg)' };
+const SUGAR_COLORS = { Low: 'var(--teal)', Med: 'var(--warn)', High: 'var(--danger)' };
+const RISK_COLORS = { none: 'var(--teal)', low: 'var(--teal)', medium: 'var(--warn)', high: 'var(--danger)' };
+const RISK_BG = { none: 'var(--teal-l)', low: 'var(--teal-l)', medium: 'var(--warn-bg)', high: 'var(--danger-bg)' };
 
 function RateBar({ label, value, color = 'var(--teal)' }) {
   return (
@@ -59,7 +59,7 @@ function EmptyState() {
     <div style={{ textAlign: 'center', padding: '60px 24px' }}>
       <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '16px', color: 'var(--teal)' }}>
         <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-          <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
+          <line x1="18" y1="20" x2="18" y2="10" /><line x1="12" y1="20" x2="12" y2="4" /><line x1="6" y1="20" x2="6" y2="14" />
         </svg>
       </div>
       <div style={{ fontSize: '18px', fontWeight: 700, color: 'var(--navy)', marginBottom: '8px' }}>No check-in data yet</div>
@@ -71,9 +71,9 @@ function EmptyState() {
 
 export default function Trends() {
   const { accessToken } = useAuth();
-  const [trends,  setTrends]  = useState(null);
+  const [trends, setTrends] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [days,    setDays]    = useState(30);
+  const [days, setDays] = useState(30);
 
   useEffect(() => {
     if (!accessToken) return;
@@ -112,10 +112,10 @@ export default function Trends() {
           {/* Summary stats row */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '12px', marginBottom: '28px' }}>
             {[
-              { val: trends.total_checkins,             label: 'Check-ins',        bg: 'var(--teal-l)',   color: 'var(--teal-d)' },
-              { val: `${trends.brush_rate}%`,           label: 'Brush rate',       bg: 'var(--teal-l)',   color: 'var(--teal-d)' },
-              { val: trends.high_sugar_days,            label: 'High sugar days',  bg: 'var(--warn-bg)',  color: 'var(--warn)' },
-              { val: trends.latest_streak,              label: 'Current streak',   bg: 'var(--teal-l)',   color: 'var(--teal-d)' },
+              { val: trends.total_checkins, label: 'Check-ins', bg: 'var(--teal-l)', color: 'var(--teal-d)' },
+              { val: `${trends.brush_rate}%`, label: 'Brush rate', bg: 'var(--teal-l)', color: 'var(--teal-d)' },
+              { val: trends.high_sugar_days, label: 'High sugar days', bg: 'var(--warn-bg)', color: 'var(--warn)' },
+              { val: trends.latest_streak, label: 'Current streak', bg: 'var(--teal-l)', color: 'var(--teal-d)' },
             ].map(s => (
               <div key={s.label} style={{ textAlign: 'center', padding: '14px', background: s.bg, borderRadius: '10px' }}>
                 <div style={{ fontSize: '26px', fontWeight: 700, color: s.color }}>{s.val}</div>
@@ -125,17 +125,15 @@ export default function Trends() {
           </div>
 
           {/* Score averages */}
-          {(trends.avg_habit_score > 0 || trends.avg_dental_score > 0) && (
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '28px' }}>
-              {[
-                { val: trends.avg_habit_score,  label: 'Avg habit score',  color: 'var(--teal-d)',  bg: 'var(--teal-l)' },
-                { val: trends.avg_dental_score, label: 'Avg dental score', color: 'var(--navy)',    bg: 'var(--bg)' },
-              ].map(s => (
-                <div key={s.label} className="card" style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '16px 20px', background: s.bg }}>
-                  <div style={{ fontSize: '32px', fontWeight: 700, color: s.color }}>{s.val}</div>
-                  <div style={{ fontSize: '13px', color: 'var(--slate)' }}>{s.label}<br/><span style={{ fontSize: '11px', color: 'var(--muted)' }}>last {days} days</span></div>
+          {(trends.avg_habit_score > 0) && (
+            <div style={{ marginBottom: '28px' }}>
+              <div className="card" style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '16px 20px', background: 'var(--teal-l)' }}>
+                <div style={{ fontSize: '32px', fontWeight: 700, color: 'var(--teal-d)' }}>{trends.avg_habit_score}</div>
+                <div style={{ fontSize: '13px', color: 'var(--slate)' }}>
+                  Avg habit score<br />
+                  <span style={{ fontSize: '11px', color: 'var(--muted)' }}>last {days} days</span>
                 </div>
-              ))}
+              </div>
             </div>
           )}
 
@@ -146,8 +144,8 @@ export default function Trends() {
               <div className="chart-wrap">
                 <div style={{ fontSize: '14px', fontWeight: 600, color: 'var(--navy)', marginBottom: '14px' }}>Habit adherence rates</div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                  <RateBar label="Brushing"  value={trends.brush_rate}     color={trends.brush_rate  >= 80 ? 'var(--teal)' : trends.brush_rate  >= 50 ? 'var(--warn)' : 'var(--danger)'} />
-                  <RateBar label="Flossing"  value={trends.floss_rate}     color={trends.floss_rate  >= 80 ? 'var(--teal)' : trends.floss_rate  >= 50 ? 'var(--warn)' : 'var(--danger)'} />
+                  <RateBar label="Brushing" value={trends.brush_rate} color={trends.brush_rate >= 80 ? 'var(--teal)' : trends.brush_rate >= 50 ? 'var(--warn)' : 'var(--danger)'} />
+                  <RateBar label="Flossing" value={trends.floss_rate} color={trends.floss_rate >= 80 ? 'var(--teal)' : trends.floss_rate >= 50 ? 'var(--warn)' : 'var(--danger)'} />
                   <RateBar label="Mouthwash" value={trends.mouthwash_rate} color="var(--teal)" />
                 </div>
               </div>
@@ -215,10 +213,10 @@ export default function Trends() {
                 <div style={{ fontSize: '14px', fontWeight: 600, color: 'var(--navy)', marginBottom: '14px' }}>Risk breakdown</div>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
                   {[
-                    { key: 'none',   label: 'Clear' },
-                    { key: 'low',    label: 'Low' },
+                    { key: 'none', label: 'Clear' },
+                    { key: 'low', label: 'Low' },
                     { key: 'medium', label: 'Medium' },
-                    { key: 'high',   label: 'High' },
+                    { key: 'high', label: 'High' },
                   ].map(({ key, label }) => (
                     <div key={key} style={{ textAlign: 'center', padding: '10px', background: RISK_BG[key], borderRadius: '8px' }}>
                       <div style={{ fontSize: '20px', fontWeight: 700, color: RISK_COLORS[key] }}>{trends.risk_breakdown[key] ?? 0}</div>
