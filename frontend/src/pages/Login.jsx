@@ -1,13 +1,25 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 export default function Login() {
   const navigate = useNavigate();
   const { logIn } = useAuth();
+  const [form, setForm]     = useState({ email: '', password: '' });
+  const [error, setError]   = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleLogin = () => {
-    logIn();
-    navigate('/dashboard');
+  const handleSubmit = async () => {
+    setError('');
+    setLoading(true);
+    try {
+      await logIn(form);
+      navigate('/dashboard');
+    } catch (e) {
+      setError(e.message || 'Invalid email or password');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -16,9 +28,7 @@ export default function Login() {
       <div style={{
         background: 'linear-gradient(145deg, var(--navy) 0%, #0F2438 100%)',
         padding: '60px 48px',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
+        display: 'flex', flexDirection: 'column', justifyContent: 'center',
       }}>
         <h2 style={{ fontSize: '28px', fontWeight: 700, color: '#fff', marginBottom: '12px', lineHeight: 1.2 }}>
           Welcome back to <span style={{ color: 'var(--teal)' }}>DentaGuide</span>
@@ -32,23 +42,31 @@ export default function Login() {
       <div style={{ background: 'var(--body)', padding: '60px 48px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
         <div className="sec-title">Sign in</div>
         <div className="sec-sub">Enter your email and password to continue</div>
+
+        {error && (
+          <div style={{ background: 'var(--danger-bg)', border: '1px solid var(--danger-b)', borderRadius: '8px', padding: '10px 14px', fontSize: '13px', color: 'var(--danger)', marginBottom: '16px' }}>
+            {error}
+          </div>
+        )}
+
         <div className="form-group">
           <label className="form-label">Email address</label>
-          <input className="form-input" placeholder="you@email.com" type="email" />
+          <input className="form-input" type="email" placeholder="you@email.com"
+            value={form.email} onChange={e => setForm(f => ({ ...f, email: e.target.value }))} />
         </div>
         <div className="form-group">
           <label className="form-label">Password</label>
-          <input className="form-input" placeholder="••••••••" type="password" />
+          <input className="form-input" type="password" placeholder="••••••••"
+            value={form.password} onChange={e => setForm(f => ({ ...f, password: e.target.value }))}
+            onKeyDown={e => e.key === 'Enter' && handleSubmit()} />
         </div>
         <div style={{ textAlign: 'right', marginTop: '-10px', marginBottom: '18px' }}>
-          <span
-            style={{ fontSize: '12px', color: 'var(--teal)', cursor: 'pointer', fontWeight: 600 }}
-            onClick={() => navigate('/forgot')}
-          >
-            Forgot password?
-          </span>
+          <span style={{ fontSize: '12px', color: 'var(--teal)', cursor: 'pointer', fontWeight: 600 }}
+            onClick={() => navigate('/forgot')}>Forgot password?</span>
         </div>
-        <button className="btn btn-teal btn-full btn-lg" onClick={handleLogin}>Sign in →</button>
+        <button className="btn btn-teal btn-full btn-lg" onClick={handleSubmit} disabled={loading}>
+          {loading ? 'Signing in…' : 'Sign in →'}
+        </button>
         <div className="divider"><span>or</span></div>
         <button className="btn btn-navy btn-full" onClick={() => navigate('/signup')}>Create a free account</button>
       </div>
