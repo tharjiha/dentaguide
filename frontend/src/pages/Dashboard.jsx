@@ -154,9 +154,6 @@ export default function Dashboard() {
                 <div style={{ fontSize: '13px', color: '#9A6200', lineHeight: 1.5 }}>
                   {today?.risk_explanation || today?.risk_flags?.join(', ') || 'Risk pattern detected — consider booking a check-up.'}
                 </div>
-                <button className="btn btn-sm" style={{ marginTop: '10px', background: 'var(--warn)', color: '#fff' }} onClick={() => navigate('/dentist')}>
-                  Find a dentist →
-                </button>
               </div>
             </div>
           )}
@@ -202,16 +199,7 @@ export default function Dashboard() {
             <div style={{ fontSize: '13px', color: 'rgba(255,255,255,.8)', lineHeight: 1.6 }}>{getCoachTip()}</div>
           </div>
 
-          {/* Photo */}
-          <div className="card" style={{ padding: '16px' }}>
-            <div style={{ fontSize: '13px', fontWeight: 700, color: 'var(--navy)', marginBottom: '10px' }}>Photo tracking</div>
-            <div className="photo-row">
-              <div className="photo-thumb"><ImageIcon size={26} color="var(--muted)" /><small>Last week</small></div>
-              <div className="photo-thumb"><CameraIcon size={26} color="var(--muted)" /><small>This week</small></div>
-            </div>
-            <button className="btn btn-outline btn-sm btn-full" style={{ marginTop: '10px' }} onClick={() => navigate('/photos')}>View all photos →</button>
-          </div>
-
+          
           {/* Real stats from trends */}
           {trends && trends.total_checkins > 0 && (
             <div className="card card-sm">
