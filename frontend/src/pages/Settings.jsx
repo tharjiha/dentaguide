@@ -9,7 +9,6 @@ export function SettingsSidebar({ active }) {
   const links = [
     { key: 'settings',      label: 'Account',       path: '/settings' },
     { key: 'editprofile',   label: 'Edit profile',  path: '/settings/profile' },
-    { key: 'notifications', label: 'Notifications', path: '/settings/notifications' },
   ];
 
   return (
