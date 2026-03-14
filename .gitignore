@@ -4,6 +4,7 @@ frontend/.env
 
 # Python
 backend/venv/
+frontend/venv/
 backend/__pycache__/
 backend/**/__pycache__/
 *.pyc
