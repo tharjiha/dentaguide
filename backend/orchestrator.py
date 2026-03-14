@@ -208,7 +208,6 @@ async def run_pipeline(payload, profile: dict, history: list) -> dict:
         }
 
     return {
-        "dental_score":     score,
         "habit_score":      habit_result["habit_score"],
         "streak":           habit_result["streak"],
         "risk_severity":    risk_severity,

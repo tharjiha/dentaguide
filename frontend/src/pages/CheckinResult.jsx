@@ -152,9 +152,6 @@ export default function CheckinResult() {
         <div style={{ fontSize: '14px', color: 'rgba(255,255,255,.5)', marginTop: '6px' }}>{today}</div>
         <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', marginTop: '16px', flexWrap: 'wrap' }}>
           <div style={{ background: 'rgba(255,255,255,.08)', border: '1px solid rgba(255,255,255,.12)', borderRadius: '8px', padding: '10px 18px', fontSize: '12px', color: 'rgba(255,255,255,.7)', display: 'flex', alignItems: 'center', gap: '6px' }}>
-            Dental score: <span style={{ fontWeight: 700, color: 'var(--teal)', fontSize: '16px' }}>{result.dental_score}</span>
-          </div>
-          <div style={{ background: 'rgba(255,255,255,.08)', border: '1px solid rgba(255,255,255,.12)', borderRadius: '8px', padding: '10px 18px', fontSize: '12px', color: 'rgba(255,255,255,.7)', display: 'flex', alignItems: 'center', gap: '6px' }}>
             Risk: <span style={{ fontWeight: 700, color: riskColor, textTransform: 'capitalize' }}>{result.risk_severity}</span>
           </div>
           {result.streak > 0 && (
@@ -210,9 +207,6 @@ export default function CheckinResult() {
                 {result.risk_flags.map((f, i) => <span key={i} className="badge badge-warn">{f}</span>)}
               </div>
             )}
-            <button className="btn btn-sm" style={{ background: 'var(--warn)', color: '#fff' }} onClick={() => navigate('/dentist')}>
-              Find a covered dentist →
-            </button>
           </div>
         )}
 
