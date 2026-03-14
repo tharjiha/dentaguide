@@ -92,13 +92,6 @@ export default function CheckinResult() {
             <div style={{ fontSize: '13px', color: '#9A6200', lineHeight: 1.5 }}>
               {result.alert.explanation}
             </div>
-            <button
-              className="btn btn-sm"
-              style={{ marginTop: '10px', background: 'var(--warn)', color: '#fff' }}
-              onClick={() => navigate('/dentist')}
-            >
-              Find a covered dentist →
-            </button>
           </div>
         )}
 
