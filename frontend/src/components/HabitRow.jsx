@@ -1,7 +1,13 @@
 import { useState } from 'react';
 
-export default function HabitRow({ icon, name, sub, defaultOn = false, type = 'toggle', children }) {
+export default function HabitRow({ icon, name, sub, defaultOn = false, type = 'toggle', onChange, children }) {
   const [on, setOn] = useState(defaultOn);
+
+  const handleToggle = () => {
+    const next = !on;
+    setOn(next);
+    if (onChange) onChange(next);
+  };
 
   return (
     <div className="habit-row">
@@ -15,7 +21,7 @@ export default function HabitRow({ icon, name, sub, defaultOn = false, type = 't
       {type === 'toggle' ? (
         <button
           className={`toggle ${on ? 'on' : ''}`}
-          onClick={() => setOn(v => !v)}
+          onClick={handleToggle}
           aria-label={on ? 'On' : 'Off'}
         />
       ) : children}
