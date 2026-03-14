@@ -13,10 +13,10 @@ const LogoSVG = () => (
 
 const appNavLinks = [
   { to: '/dashboard', label: 'Dashboard' },
-  { to: '/checkin', label: 'Check-in' },
-  { to: '/trends', label: 'Trends' },
-  { to: '/photos', label: 'Photos' },
-  { to: '/settings', label: 'Account' },
+  { to: '/checkin',   label: 'Check-in' },
+  { to: '/trends',    label: 'Trends' },
+  { to: '/photos',    label: 'Photos' },
+  { to: '/settings',  label: 'Account' },
 ];
 
 export default function Navbar() {
@@ -24,10 +24,20 @@ export default function Navbar() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    logOut();
+  const handleLogout = async () => {
+    await logOut();
     navigate('/');
   };
+
+  // Get initials for avatar
+  const initial = user?.first_name?.[0]?.toUpperCase()
+    || user?.name?.[0]?.toUpperCase()
+    || user?.email?.[0]?.toUpperCase()
+    || 'U';
+
+  const displayName = user?.first_name
+    ? `${user.first_name} ${user.last_name || ''}`.trim()
+    : user?.email || '';
 
   return (
     <nav style={{
@@ -42,7 +52,7 @@ export default function Navbar() {
       top: 0,
       zIndex: 200,
     }}>
-      <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '9px', textDecoration: 'none' }}>
+      <Link to={isLoggedIn ? '/dashboard' : '/'} style={{ display: 'flex', alignItems: 'center', gap: '9px', textDecoration: 'none' }}>
         <LogoSVG />
         <div>
           <div style={{ fontSize: '18px', fontWeight: 700, lineHeight: 1 }}>
@@ -58,41 +68,36 @@ export default function Navbar() {
       {isLoggedIn ? (
         <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
           {appNavLinks.map(link => (
-            <Link
-              key={link.to}
-              to={link.to}
-              style={{
-                fontSize: '13px',
-                fontWeight: location.pathname.startsWith(link.to) ? 600 : 500,
-                color: location.pathname.startsWith(link.to) ? 'var(--teal-d)' : 'var(--slate)',
-                padding: '6px 14px',
-                borderRadius: '6px',
-                background: location.pathname.startsWith(link.to) ? 'var(--teal-l)' : 'transparent',
-                textDecoration: 'none',
-                transition: 'all .15s',
-              }}
-            >
+            <Link key={link.to} to={link.to} style={{
+              fontSize: '13px',
+              fontWeight: location.pathname.startsWith(link.to) ? 600 : 500,
+              color: location.pathname.startsWith(link.to) ? 'var(--teal-d)' : 'var(--slate)',
+              padding: '6px 14px',
+              borderRadius: '6px',
+              background: location.pathname.startsWith(link.to) ? 'var(--teal-l)' : 'transparent',
+              textDecoration: 'none',
+              transition: 'all .15s',
+            }}>
               {link.label}
             </Link>
           ))}
-          <div
-            onClick={() => navigate('/settings')}
-            style={{
-              width: '32px',
-              height: '32px',
-              background: 'var(--teal)',
-              borderRadius: '50%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: '13px',
-              fontWeight: 600,
-              color: '#fff',
-              marginLeft: '4px',
-              cursor: 'pointer',
-            }}
-          >
-            {user?.name?.[0] || 'S'}
+
+          {/* Avatar with dropdown on click */}
+          <div style={{ position: 'relative', marginLeft: '4px' }}>
+            <div
+              title={displayName}
+              onClick={() => navigate('/settings')}
+              style={{
+                width: '32px', height: '32px',
+                background: 'var(--teal)',
+                borderRadius: '50%',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontSize: '13px', fontWeight: 600, color: '#fff',
+                cursor: 'pointer',
+              }}
+            >
+              {initial}
+            </div>
           </div>
         </div>
       ) : (
@@ -100,9 +105,7 @@ export default function Navbar() {
           <Link to="/login" style={{ fontSize: '13px', fontWeight: 500, color: 'var(--slate)', padding: '6px 14px', borderRadius: '6px', textDecoration: 'none' }}>
             Sign in
           </Link>
-          <Link to="/signup" className="btn btn-teal">
-            Get started free
-          </Link>
+          <Link to="/signup" className="btn btn-teal">Get started free</Link>
         </div>
       )}
     </nav>
