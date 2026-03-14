@@ -39,6 +39,7 @@ async def submit_checkin(
     Original check-in endpoint from feat/daily-check-in.
     Runs the AI pipeline (orchestrator) and saves the result.
     """
+    print(f"Received payload: {payload.model_dump()}")
     from orchestrator import run_pipeline
 
     sb = get_supabase()
@@ -61,13 +62,24 @@ async def submit_checkin(
     import base64, uuid
     photo_url = None
     if payload.photo_base64:
+        print("Uploading photo...")
+
         try:
             image_bytes = base64.b64decode(payload.photo_base64)
             filename = f"{user_id}/{uuid.uuid4()}.jpg"
-            sb.storage.from_("photos").upload(filename, image_bytes, {"content-type": "image/jpeg"})
+
+            sb.storage.from_("photos").upload(
+                path=filename,
+                file=image_bytes,
+                file_options={"content-type": "image/jpeg"},
+            )
+
             photo_url = sb.storage.from_("photos").get_public_url(filename)
+
+            print("Photo uploaded:", photo_url)
+
         except Exception as e:
-            print(f"Photo upload failed: {e}")
+            print("Photo upload failed:", e)
 
     checkin_row = {
         "user_id":          user_id,
@@ -85,6 +97,7 @@ async def submit_checkin(
         "dental_score":     results["dental_score"],
         "photo_url":        photo_url,
     }
+    print("Final photo_url:", photo_url)
     sb.table("check_ins").insert(checkin_row).execute()
 
     if results.get("alert"):
