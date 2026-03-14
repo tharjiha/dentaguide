@@ -11,18 +11,18 @@ export default function Checkin() {
   const navigate = useNavigate();
   const { accessToken } = useAuth();
 
-  const [symptoms,     setSymptoms]     = useState([]);
-  const [sugar,        setSugar]        = useState('Low');
-  const [photoUploaded,setPhotoUploaded]= useState(false);
-  const [brushed,      setBrushed]      = useState(false);
-  const [flossed,      setFlossed]      = useState(false);
-  const [mouthwash,    setMouthwash]    = useState(false);
-  const [loading,      setLoading]      = useState(false);
-  const [error,        setError]        = useState(null);
-  const [photoBase64,  setPhotoBase64]  = useState(null);
-  const [alreadyDone,  setAlreadyDone]  = useState(false);
-  const [checking,     setChecking]     = useState(true);
-  const [streak,       setStreak]       = useState(null);
+  const [symptoms, setSymptoms] = useState([]);
+  const [sugar, setSugar] = useState('Low');
+  const [photoUploaded, setPhotoUploaded] = useState(false);
+  const [brushed, setBrushed] = useState(false);
+  const [flossed, setFlossed] = useState(false);
+  const [mouthwash, setMouthwash] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [photoBase64, setPhotoBase64] = useState(null);
+  const [alreadyDone, setAlreadyDone] = useState(false);
+  const [checking, setChecking] = useState(true);
+  const [streak, setStreak] = useState(null);
 
   const today = new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
 
@@ -60,6 +60,7 @@ export default function Checkin() {
         symptoms,                     // plain strings, matches your schema
         photo_base64: photoBase64 || null,
       };
+      console.log('Submitting payload:', payload);
 
       const res = await fetch(`${BASE}/api/checkin`, {
         method: 'POST',
@@ -111,7 +112,7 @@ export default function Checkin() {
         <div className="container" style={{ textAlign: 'center', padding: '60px 24px' }}>
           <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '16px', color: 'var(--teal)' }}>
             <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" />
             </svg>
           </div>
           <div style={{ fontSize: '18px', fontWeight: 700, color: 'var(--navy)', marginBottom: '8px' }}>Already checked in today</div>
