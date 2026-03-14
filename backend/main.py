@@ -43,7 +43,6 @@ async def submit_checkin(
     payload: CheckinPayload,
     user_id: str = Depends(get_current_user)
 ):
-    # TEMP: hardcoded profile for testing — remove when auth is wired
     profile = {
         "conditions": ["gum_disease", "sensitivity", "enamel_erosion"],
         "genetic_risk": "one parent",
@@ -59,6 +58,50 @@ async def submit_checkin(
     history = history_result.data or []
 
     results = await run_pipeline(payload, profile, history)
+
+    import base64, uuid
+    photo_url = None
+    if payload.photo_base64:
+        try:
+            image_bytes = base64.b64decode(payload.photo_base64)
+            filename = f"{user_id}/{uuid.uuid4()}.jpg"
+            supabase.storage.from_("photos").upload(
+                filename,
+                image_bytes,
+                {"content-type": "image/jpeg"}
+            )
+            photo_url = supabase.storage.from_("photos").get_public_url(filename)
+            print(f"Photo saved: {photo_url}")
+        except Exception as e:
+            print(f"Photo upload failed: {e}")
+
+    checkin_row = {
+        "user_id": user_id,
+        "brushed": payload.brushed,
+        "flossed": payload.flossed,
+        "mouthwash": payload.mouthwash,
+        "sugar_intake": payload.sugar_intake,
+        "symptoms": payload.symptoms,
+        "habit_score": results["habit_score"],
+        "streak": results["streak"],
+        "risk_severity": results["risk_severity"],
+        "risk_flags": results["risk_flags"],
+        "risk_explanation": results["risk_explanation"],
+        "coach_tip": results["coach_tip"],
+        "dental_score": results["dental_score"],
+        "photo_url": photo_url,
+    }
+
+    supabase.table("check_ins").insert(checkin_row).execute()
+
+    if results["alert"]:
+        supabase.table("risk_flags").insert({
+            "user_id": user_id,
+            "severity": results["risk_severity"],
+            "flags": results["risk_flags"],
+            "explanation": results["risk_explanation"]
+        }).execute()
+
     return results
 
 @app.get("/api/checkin/history")
