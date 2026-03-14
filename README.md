@@ -75,8 +75,5 @@ You'll need a `.env` in both `frontend/` and `backend/` with your Supabase and G
 ---
 
 ## Team
-
-Built at Gen AI Genesis 2026.
-
-- **Tharjiha Suthekara** — backend, AI agents, daily check-in flow, photos
-- **Jennifer Huang** — frontend, authentication, profile onboarding, trends, API integration
+- **Tharjiha Suthekara** — dashboard format, daily check-in flow, photo history analysis, bugfixes, account setting
+- **Jennifer Huang** — dashboard information connection, authentication, profile onboarding, trends page functionality, API integration
