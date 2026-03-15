@@ -165,7 +165,7 @@ export default function Checkin() {
               <div className="card">
                 <div className="sec-label">Photo (optional)</div>
                 <div style={{ fontSize: '12px', color: 'var(--muted)', marginBottom: '12px' }}>
-                  Claude Vision compares this week vs last week and flags visible changes.
+                  Gemini AI compares this week vs last week and flags visible changes.
                 </div>
                 <label style={{
                   border: '2px dashed var(--teal-m)', borderRadius: '10px', padding: '28px',

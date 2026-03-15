@@ -22,7 +22,7 @@ def get_current_user_id(
 
 
 def _normalise(row: dict) -> dict:
-    """Ensure array fields are lists, not raw strings."""
+    """Ensure array fields are lists and bool fields are real booleans."""
     for field in ("symptoms", "risk_flags"):
         val = row.get(field)
         if isinstance(val, str):
@@ -32,7 +32,16 @@ def _normalise(row: dict) -> dict:
                 row[field] = []
         elif val is None:
             row[field] = []
+
+    for field in ("brushed", "flossed", "mouthwash"):
+        val = row.get(field)
+        if isinstance(val, str):
+            row[field] = val.lower() == "true"
+        elif val is None:
+            row[field] = False
+
     return row
+
 
 
 @router.get("/trends")

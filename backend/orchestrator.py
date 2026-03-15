@@ -1,5 +1,5 @@
 import asyncio
-from agents import habit_agent
+from agents import habit_agent, risk_agent
 from photo_agent import analyze_photo, impression_to_risk, recommended_action_to_risk
 
 
@@ -9,9 +9,13 @@ async def run_pipeline(payload, profile: dict, history: list) -> dict:
     """
 
     has_photo = bool(getattr(payload, "photo_base64", None))
-    tasks     = [habit_agent.run(payload, history)]
-
+    tasks = [
+        habit_agent.run(payload, history),
+        risk_agent.run(payload, profile, history),
+    ]
+    photo_task_idx = None
     if has_photo:
+        photo_task_idx = len(tasks)
         tasks.append(
             analyze_photo(
                 photo_base64=payload.photo_base64,
@@ -27,78 +31,43 @@ async def run_pipeline(payload, profile: dict, history: list) -> dict:
         "habit_score": 5, "streak": 0
     }
 
+    _risk_agent_result = results[1] if not isinstance(results[1], Exception) else None
+
     photo_analysis = None
     photo_error    = None
-    if has_photo:
-        if isinstance(results[1], Exception):
-            photo_error = str(results[1])
+    if has_photo and photo_task_idx is not None:
+        if isinstance(results[photo_task_idx], Exception):
+            photo_error = str(results[photo_task_idx])
             print(f"Photo analysis failed: {photo_error}")
         else:
-            photo_analysis = results[1]
+            photo_analysis = results[photo_task_idx]
 
-    symptoms   = list(payload.symptoms or [])
-    sugar      = getattr(payload, "sugar_intake", "Low")
-    conditions = profile.get("conditions") or []
+    risk_result = _risk_agent_result or await risk_agent.run(payload, profile, history)
 
-    HIGH_RISK_SYMPTOMS = {"gum pain", "bleeding gums", "tooth pain"}
-    WARN_SYMPTOMS      = {"sensitivity", "dry mouth", "bad breath", "jaw pain"}
-    sym_lower          = {s.lower() for s in symptoms}
-    high_risk_syms     = [s for s in symptoms if s.lower() in HIGH_RISK_SYMPTOMS]
-    warn_syms          = [s for s in symptoms if s.lower() in WARN_SYMPTOMS]
+    risk_severity   = risk_result.get("severity", "none")
+    risk_flags      = risk_result.get("flags", [])
+    risk_explanation = risk_result.get("explanation", "")
 
-    recent           = history[:14]
-    recent_high_sugar = sum(1 for r in recent if (r.get("sugar_intake") or "").title() == "High")
-
-    photo_risk  = "none"
-    risk_order  = ["none", "low", "medium", "high"]
+    risk_order = ["none", "low", "medium", "high"]
+    photo_risk = "none"
     if photo_analysis:
         photo_risk  = impression_to_risk(photo_analysis.get("overall_visual_impression", "healthy"))
         action_risk = recommended_action_to_risk(photo_analysis.get("recommended_action", "none"))
         photo_risk  = risk_order[max(risk_order.index(photo_risk), risk_order.index(action_risk))]
 
-    risk_flags    = []
-    risk_severity = "none"
-    if len(high_risk_syms) >= 2 or (high_risk_syms and sugar == "High"):
-        risk_severity = "high"
-    elif high_risk_syms or (len(warn_syms) >= 2 and sugar == "High"):
-        risk_severity = "medium"
-    elif warn_syms or sugar == "High" or recent_high_sugar >= 5:
-        risk_severity = "low"
+        if risk_order.index(photo_risk) > risk_order.index(risk_severity):
+            risk_severity    = photo_risk
+            risk_explanation = "Multiple risk indicators detected today. A professional dental assessment is recommended."
 
-    if photo_risk in risk_order and risk_order.index(photo_risk) > risk_order.index(risk_severity):
-        risk_severity = photo_risk
-    if high_risk_syms:
-        risk_flags.append(f"Symptoms: {', '.join(high_risk_syms)}")
-    if warn_syms:
-        risk_flags.append(f"Watch: {', '.join(warn_syms)}")
-    if sugar == "High":
-        risk_flags.append("High sugar intake today")
-    if recent_high_sugar >= 5:
-        risk_flags.append(f"High sugar on {recent_high_sugar} of last 14 days")
-    if photo_analysis:
         for concern in (photo_analysis.get("areas_of_concern") or []):
             risk_flags.append(f"Photo: {concern}")
         for finding in (photo_analysis.get("context_matched_findings") or []):
             risk_flags.append(f"Context: {finding}")
 
-    if risk_severity == "none":
-        risk_explanation = "No risk indicators today. Great habits!"
-    elif risk_severity == "low":
-        risk_explanation = (
-            f"Minor indicators: {'; '.join(risk_flags[:2])}. "
-            "Maintain current habits and monitor over the next few days."
-        )
-    elif risk_severity == "medium":
-        risk_explanation = (
-            f"Pattern to monitor: {'; '.join(risk_flags[:3])}. "
-            "Consider reducing sugar and improving flossing. "
-            "If symptoms persist, mention to your dentist."
-        )
-    else:
-        risk_explanation = (
-            f"Multiple risk indicators: {'; '.join(risk_flags[:3])}. "
-            "A dental check-up is recommended."
-        )
+    symptoms   = list(payload.symptoms or [])
+    sugar      = getattr(payload, "sugar_intake", "Low")
+    conditions = profile.get("conditions") or []
+    sym_lower  = {s.lower() for s in symptoms}
 
     brushed   = getattr(payload, "brushed",   False)
     flossed   = getattr(payload, "flossed",   False)
@@ -160,7 +129,12 @@ async def run_pipeline(payload, profile: dict, history: list) -> dict:
     else:
         coach_tip = "Every habit you build now prevents costly treatment later. Small consistent steps make the biggest difference."
 
-    
+    base          = 60
+    habit_bonus   = habit_result["habit_score"] * 3
+    risk_penalty  = {"none": 0, "low": 5, "medium": 15, "high": 25}
+    photo_penalty = {"none": 0, "low": 3, "medium": 8, "high": 15}.get(photo_risk, 0) if photo_analysis else 0
+    score = min(100, max(0, base + habit_bonus - risk_penalty.get(risk_severity, 0) - photo_penalty))
+
     photo_result = None
     if photo_analysis:
         photo_result = {
@@ -195,6 +169,7 @@ async def run_pipeline(payload, profile: dict, history: list) -> dict:
         }
 
     return {
+        "dental_score":     score,
         "habit_score":      habit_result["habit_score"],
         "streak":           habit_result["streak"],
         "risk_severity":    risk_severity,

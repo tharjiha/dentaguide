@@ -18,7 +18,7 @@ export default function PhotoCompare({ label1, label2, analysis, badge, badgeTyp
         </div>
       </div>
       <div style={{ fontSize: '12px', color: 'var(--slate)', background: 'var(--teal-l)', borderRadius: '8px', padding: '9px 11px', lineHeight: 1.5, marginTop: '10px' }}>
-        <b>Claude Vision:</b> {analysis}
+        <b>Gemini AI:</b> {analysis}
       </div>
     </div>
   );

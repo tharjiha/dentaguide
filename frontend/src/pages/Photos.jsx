@@ -46,7 +46,7 @@ export default function Photos() {
       <div className="hero-dark" style={{ padding: '28px 32px' }}>
         <div className="hero-inner">
           <div className="page-title">Photo history</div>
-          <div className="page-sub">Week-over-week visual tracking · Powered by Claude Vision</div>
+          <div className="page-sub">Week-over-week visual tracking · Powered by Gemini AI</div>
         </div>
       </div>
 
@@ -54,7 +54,7 @@ export default function Photos() {
         <div className="card-ok" style={{ marginBottom: '22px', display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
           <InfoIcon size={18} color="#0F5A3A" />
           <div style={{ fontSize: '13px', color: '#0F5A3A', lineHeight: 1.5 }}>
-            <b>About photo analysis:</b> Claude Vision compares photos week-over-week and flags visible changes. This is a visual screening tool — not a medical diagnosis.
+            <b>About photo analysis:</b> Gemini AI compares photos week-over-week and flags visible changes. This is a visual screening tool — not a medical diagnosis.
           </div>
         </div>
 

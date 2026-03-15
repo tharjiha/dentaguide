@@ -27,8 +27,8 @@ export default function Landing() {
           </div>
           <div className="feat-card">
             <div className="f-icon"><CameraIcon size={24} color="var(--teal)" /></div>
-            <h3>Claude Vision photo scan</h3>
-            <p>Upload a photo weekly. Claude compares it to last week and flags visible changes — redness, discolouration, buildup.</p>
+            <h3>Gemini AI photo scan</h3>
+            <p>Upload a photo weekly. Gemini AI compares it to last week and flags visible changes — redness, discolouration, buildup.</p>
           </div>
           <div className="feat-card">
             <div className="f-icon"><ToothIcon size={24} color="var(--teal)" /></div>
