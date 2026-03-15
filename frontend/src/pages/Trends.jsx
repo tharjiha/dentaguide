@@ -109,7 +109,7 @@ export default function Trends() {
         <div className="container"><EmptyState /></div>
       ) : (
         <div className="container">
-          {/* Summary stats row */}
+          {}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '12px', marginBottom: '28px' }}>
             {[
               { val: trends.total_checkins, label: 'Check-ins', bg: 'var(--teal-l)', color: 'var(--teal-d)' },
@@ -124,7 +124,7 @@ export default function Trends() {
             ))}
           </div>
 
-          {/* Score averages */}
+          {}
           {(trends.avg_habit_score > 0) && (
             <div style={{ marginBottom: '28px' }}>
               <div className="card" style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '16px 20px', background: 'var(--teal-l)' }}>
@@ -138,7 +138,7 @@ export default function Trends() {
           )}
 
           <div className="two-col">
-            {/* Left */}
+            {}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
 
               <div className="chart-wrap">
@@ -183,7 +183,7 @@ export default function Trends() {
                 </div>
               </div>
 
-              {/* Habit score over time */}
+              {}
               {trends.avg_habit_score > 0 && (
                 <div className="chart-wrap">
                   <div style={{ fontSize: '14px', fontWeight: 600, color: 'var(--navy)', marginBottom: '10px' }}>Habit score — last {days} days</div>
@@ -192,7 +192,7 @@ export default function Trends() {
               )}
             </div>
 
-            {/* Right */}
+            {}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
 
               <div className="chart-wrap">
@@ -235,7 +235,7 @@ export default function Trends() {
                 />
               </div>
 
-              {/* Dental score over time */}
+              {}
               {trends.avg_dental_score > 0 && (
                 <div className="chart-wrap">
                   <div style={{ fontSize: '14px', fontWeight: 600, color: 'var(--navy)', marginBottom: '10px' }}>Dental score — last {days} days</div>
@@ -245,7 +245,7 @@ export default function Trends() {
             </div>
           </div>
 
-          {/* Most recent coach tip */}
+          {}
           {trends.daily.length > 0 && trends.daily[trends.daily.length - 1].coach_tip && (
             <div className="card" style={{ background: 'var(--navy)', marginTop: '24px' }}>
               <div className="sec-label" style={{ color: 'var(--teal)' }}>Latest coach tip</div>

@@ -28,8 +28,6 @@ export default function Navbar() {
     await logOut();
     navigate('/');
   };
-
-  // Get initials for avatar
   const initial = user?.first_name?.[0]?.toUpperCase()
     || user?.name?.[0]?.toUpperCase()
     || user?.email?.[0]?.toUpperCase()

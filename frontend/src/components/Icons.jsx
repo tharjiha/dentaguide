@@ -1,4 +1,3 @@
-// Shared SVG icon components used across DentaGuide
 export const ToothIcon = ({ size = 20, color = 'currentColor', strokeWidth = 1.8 }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round">
     <path d="M12 2C8.5 2 6 5 6 8c0 2 .8 3.6 1.2 5.2.5 1.8.4 5.6 1.8 7.4.9 1.4 1.8 1.9 2.7.5.5-.9.9-3.8 1.1-3.8.2 0 .6 2.9 1.1 3.8.9 1.4 1.8.9 2.7-.5 1.4-1.8 1.3-5.6 1.8-7.4C17.2 11.6 18 10 18 8c0-3-2.5-6-6-6z"/>

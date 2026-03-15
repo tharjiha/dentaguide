@@ -5,7 +5,7 @@ export default function Landing() {
   const navigate = useNavigate();
   return (
     <div>
-      {/* Hero */}
+      {}
       <div className="landing-hero">
         <h1>Monitor your dental health, <span>every single day.</span></h1>
         <p>DentaGuide uses agentic AI to track habits, detect risk patterns, and coach you — before problems become expensive.</p>
@@ -38,7 +38,7 @@ export default function Landing() {
         </div>
       </div>
 
-      {/* How it works */}
+      {}
       <div className="how-section">
         <div className="how-inner">
           <div style={{ textAlign: 'center', marginBottom: '8px' }}>

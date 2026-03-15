@@ -37,7 +37,7 @@ export default function ConditionDetail() {
 
       <div className="container">
         <div className="two-col">
-          {/* Left */}
+          {}
           <div>
             <div className="card" style={{ marginBottom: '18px' }}>
               <div className="sec-label">30-day trend</div>
@@ -66,7 +66,7 @@ export default function ConditionDetail() {
             </div>
           </div>
 
-          {/* Right */}
+          {}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             <div className="card" style={{ background: 'var(--navy)' }}>
               <div className="sec-label" style={{ color: 'var(--teal)' }}>

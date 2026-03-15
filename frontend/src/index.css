@@ -48,12 +48,10 @@ a { text-decoration: none; color: inherit; }
 button { font-family: var(--font); cursor: pointer; border: none; background: none; }
 input, select, textarea { font-family: var(--font); }
 
-/* ── SCROLLBAR ── */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border-m); border-radius: 3px; }
 
-/* ── BUTTONS ── */
 .btn {
   font-family: var(--font);
   font-size: 13px;
@@ -81,7 +79,6 @@ input, select, textarea { font-family: var(--font); }
 .btn-sm { padding: 5px 12px; font-size: 12px; }
 .btn-danger { background: var(--danger-bg); color: var(--danger); border: 1px solid var(--danger-b); }
 
-/* ── CARDS ── */
 .card {
   background: var(--white);
   border: 1px solid var(--border);
@@ -94,7 +91,6 @@ input, select, textarea { font-family: var(--font); }
 .card-danger { background: var(--danger-bg); border: 1.5px solid var(--danger-b); border-radius: 12px; padding: 18px; }
 .card-ok { background: var(--ok-bg); border: 1.5px solid var(--ok-b); border-radius: 12px; padding: 18px; }
 
-/* ── FORM ── */
 .form-group { margin-bottom: 18px; }
 .form-label {
   font-size: 12px;
@@ -134,7 +130,6 @@ input, select, textarea { font-family: var(--font); }
 .badge-alert { background: var(--danger-bg); color: var(--danger); }
 .badge-teal { background: var(--teal-l); color: var(--teal-d); }
 
-/* ── SECTION LABELS ── */
 .sec-label {
   font-size: 11px;
   font-weight: 700;
@@ -148,7 +143,6 @@ input, select, textarea { font-family: var(--font); }
 .page-title { font-size: 26px; font-weight: 700; color: #fff; margin-bottom: 4px; }
 .page-sub { font-size: 14px; color: rgba(255,255,255,.5); }
 
-/* ── TOGGLE ── */
 .toggle {
   width: 40px;
   height: 21px;
@@ -175,7 +169,6 @@ input, select, textarea { font-family: var(--font); }
 }
 .toggle.on::after { transform: translateX(19px); }
 
-/* ── CONDITION CHIPS ── */
 .cond-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-top: 6px; }
 .cond-card {
   border: 1.5px solid var(--border);
@@ -193,7 +186,6 @@ input, select, textarea { font-family: var(--font); }
 .cond-name { font-size: 13px; font-weight: 500; color: var(--navy); }
 .cond-icon { flex-shrink: 0; display: flex; align-items: center; }
 
-/* ── SUGAR OPTS ── */
 .sugar-opts { display: flex; gap: 5px; }
 .sugar-opt {
   font-size: 12px;
@@ -208,7 +200,6 @@ input, select, textarea { font-family: var(--font); }
 }
 .sugar-opt.sel { border-color: var(--teal); background: var(--teal-l); color: var(--teal-d); }
 
-/* ── SYMPTOM CHIPS ── */
 .symp-wrap { display: flex; flex-wrap: wrap; gap: 7px; }
 .symp {
   border: 1.5px solid var(--border);
@@ -223,7 +214,6 @@ input, select, textarea { font-family: var(--font); }
 }
 .symp.sel { border-color: var(--danger); background: var(--danger-bg); color: var(--danger); }
 
-/* ── MINI BARS ── */
 .mini-bars { display: flex; align-items: flex-end; gap: 4px; height: 32px; }
 .mbar { width: 10px; border-radius: 3px 3px 0 0; }
 .mb-teal { background: var(--teal); }
@@ -231,7 +221,6 @@ input, select, textarea { font-family: var(--font); }
 .mb-danger { background: var(--danger); }
 .mb-light { background: var(--border); }
 
-/* ── PANEL CARDS ── */
 .panel {
   background: var(--white);
   border: 1px solid var(--border);
@@ -244,7 +233,6 @@ input, select, textarea { font-family: var(--font); }
 .panel-name { font-size: 14px; font-weight: 600; color: var(--navy); display: flex; align-items: center; gap: 6px; }
 .panel-sub { font-size: 12px; color: var(--muted); margin-bottom: 10px; }
 
-/* ── CHART ── */
 .chart-wrap { background: var(--white); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
 .chart-placeholder { background: var(--teal-l); border-radius: 8px; height: 140px; display: flex; align-items: flex-end; padding: 12px; gap: 6px; }
 .chart-bar { flex: 1; background: var(--teal); border-radius: 3px 3px 0 0; opacity: .7; transition: opacity .15s; }
@@ -252,12 +240,10 @@ input, select, textarea { font-family: var(--font); }
 .chart-labels { display: flex; justify-content: space-between; margin-top: 6px; padding: 0 2px; }
 .chart-label { font-size: 10px; color: var(--muted); flex: 1; text-align: center; }
 
-/* ── DIVIDER ── */
 .divider { display: flex; align-items: center; gap: 12px; margin: 18px 0; }
 .divider span { font-size: 12px; color: var(--muted); }
 .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
-/* ── STEP LIST ── */
 .step-list { display: flex; flex-direction: column; }
 .step-item { display: flex; align-items: flex-start; gap: 13px; padding: 13px 0; position: relative; }
 .step-item:not(:last-child)::after {
@@ -289,7 +275,6 @@ input, select, textarea { font-family: var(--font); }
 .st-title { font-size: 13px; font-weight: 600; color: var(--navy); }
 .st-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
 
-/* ── PHOTO THUMB ── */
 .photo-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 10px 0; }
 .photo-thumb {
   background: var(--bg);
@@ -303,7 +288,6 @@ input, select, textarea { font-family: var(--font); }
 }
 .photo-thumb small { font-size: 10px; color: var(--muted); font-weight: 500; }
 
-/* ── HABIT ROW ── */
 .habit-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--teal-l); }
 .habit-row:last-child { border-bottom: none; }
 .habit-left { display: flex; align-items: center; gap: 11px; }
@@ -311,7 +295,6 @@ input, select, textarea { font-family: var(--font); }
 .h-name { font-size: 14px; font-weight: 500; color: var(--navy); }
 .h-sub { font-size: 11px; color: var(--muted); }
 
-/* ── DENTIST CARD ── */
 .dentist-card {
   background: var(--white);
   border: 1px solid var(--border);
@@ -345,18 +328,15 @@ input, select, textarea { font-family: var(--font); }
   display: inline-block;
 }
 
-/* ── NOTIF ROW ── */
 .notif-row { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; border-bottom: 1px solid var(--border); }
 .notif-row:last-child { border-bottom: none; }
 
-/* ── AGENT ROW ── */
 .agent-row { display: flex; align-items: flex-start; gap: 13px; padding: 14px 0; border-bottom: 1px solid var(--border); }
 .agent-row:last-child { border-bottom: none; }
 .agent-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--teal); margin-top: 5px; flex-shrink: 0; }
 .agent-name { font-size: 13px; font-weight: 600; color: var(--navy); }
 .agent-result { font-size: 13px; color: var(--slate); margin-top: 2px; line-height: 1.5; }
 
-/* ── LAYOUT ── */
 .container { max-width: 960px; margin: 0 auto; padding: 36px 24px; }
 .container-sm { max-width: 500px; margin: 0 auto; padding: 40px 24px; }
 .container-md { max-width: 720px; margin: 0 auto; padding: 36px 24px; }
@@ -364,11 +344,9 @@ input, select, textarea { font-family: var(--font); }
 .sidebar-layout { display: grid; grid-template-columns: 220px 1fr; gap: 32px; max-width: 860px; margin: 0 auto; padding: 36px 24px; }
 .settings-layout { display: grid; grid-template-columns: 200px 1fr; gap: 24px; }
 
-/* ── HERO ── */
 .hero-dark { background: linear-gradient(135deg, var(--navy) 0%, var(--navy-m) 100%); padding: 40px 32px; color: #fff; }
 .hero-inner { max-width: 960px; margin: 0 auto; }
 
-/* ── LANDING ── */
 .landing-hero { background: linear-gradient(145deg, var(--navy) 0%, #0F2438 100%); padding: 80px 32px; text-align: center; }
 .landing-hero h1 { font-size: 42px; font-weight: 700; color: #fff; line-height: 1.15; max-width: 600px; margin: 0 auto 16px; }
 .landing-hero h1 span { color: var(--teal); }
@@ -386,7 +364,6 @@ input, select, textarea { font-family: var(--font); }
 .how-step h4 { font-size: 13px; font-weight: 600; color: var(--navy); margin-bottom: 5px; }
 .how-step p { font-size: 12px; color: var(--muted); line-height: 1.5; }
 
-/* ── RESULT HERO ── */
 .result-hero { background: linear-gradient(135deg, var(--navy), var(--navy-m)); padding: 36px 32px; text-align: center; }
 
 @media (max-width: 768px) {

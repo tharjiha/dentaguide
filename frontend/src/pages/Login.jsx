@@ -24,7 +24,7 @@ export default function Login() {
 
   return (
     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', minHeight: 'calc(100vh - 56px)' }}>
-      {/* Left panel */}
+      {}
       <div style={{
         background: 'linear-gradient(145deg, var(--navy) 0%, #0F2438 100%)',
         padding: '60px 48px',
@@ -38,7 +38,7 @@ export default function Login() {
         </p>
       </div>
 
-      {/* Right form */}
+      {}
       <div style={{ background: 'var(--body)', padding: '60px 48px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
         <div className="sec-title">Sign in</div>
         <div className="sec-sub">Enter your email and password to continue</div>

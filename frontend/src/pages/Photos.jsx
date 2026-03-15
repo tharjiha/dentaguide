@@ -20,7 +20,6 @@ export default function Photos() {
         });
         if (!res.ok) throw new Error('Failed to load photos');
         const data = await res.json();
-        // Only keep check-ins that have a photo
         const withPhotos = data.filter(c => c.photo_url);
         setHistory(withPhotos);
       } catch (e) {
@@ -32,7 +31,6 @@ export default function Photos() {
     fetchHistory();
   }, []);
 
-  // Pair up photos week over week
   const pairs = [];
   for (let i = 0; i < history.length - 1; i++) {
     pairs.push({ newer: history[i], older: history[i + 1] });
@@ -118,7 +116,7 @@ export default function Photos() {
               </div>
             ))}
 
-            {/* Add new photo card */}
+            {}
             <div
               className="card"
               style={{

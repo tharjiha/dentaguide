@@ -42,7 +42,7 @@ function PhotoAnalysisCard({ analysis }) {
 
   return (
     <div className="card" style={{ marginBottom: '18px' }}>
-      {/* Header */}
+      {}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
         <div className="sec-label" style={{ marginBottom: 0, display: 'flex', alignItems: 'center', gap: '6px' }}>
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -60,12 +60,12 @@ function PhotoAnalysisCard({ analysis }) {
         </div>
       ) : (
         <>
-          {/* Summary */}
+          {}
           <div style={{ fontSize: '14px', color: 'var(--navy)', lineHeight: 1.7, marginBottom: '16px' }}>
             {analysis.summary}
           </div>
 
-          {/* Context-matched findings — most valuable section */}
+          {}
           {hasContext && (
             <div style={{ background: 'var(--teal-l)', border: '1.5px solid var(--teal-m)', borderRadius: '10px', padding: '12px 14px', marginBottom: '14px' }}>
               <div style={{ fontSize: '12px', fontWeight: 700, color: 'var(--teal-d)', textTransform: 'uppercase', letterSpacing: '.5px', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '5px' }}>
@@ -78,7 +78,7 @@ function PhotoAnalysisCard({ analysis }) {
             </div>
           )}
 
-          {/* Areas of concern */}
+          {}
           {analysis.areas_of_concern?.length > 0 && (
             <div style={{ marginBottom: '14px' }}>
               <div style={{ fontSize: '12px', fontWeight: 700, color: 'var(--warn)', textTransform: 'uppercase', letterSpacing: '.5px', marginBottom: '6px' }}>
@@ -88,7 +88,7 @@ function PhotoAnalysisCard({ analysis }) {
             </div>
           )}
 
-          {/* Positive signs */}
+          {}
           {analysis.positive_signs?.length > 0 && (
             <div style={{ marginBottom: '14px' }}>
               <div style={{ fontSize: '12px', fontWeight: 700, color: 'var(--ok)', textTransform: 'uppercase', letterSpacing: '.5px', marginBottom: '6px' }}>
@@ -98,13 +98,13 @@ function PhotoAnalysisCard({ analysis }) {
             </div>
           )}
 
-          {/* Recommended action */}
+          {}
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '10px 12px', background: 'var(--bg)', borderRadius: '8px', marginBottom: '12px' }}>
             <div style={{ fontSize: '12px', color: 'var(--muted)', fontWeight: 600 }}>Recommended:</div>
             <div style={{ fontSize: '13px', fontWeight: 700, color: action.color }}>{action.label}</div>
           </div>
 
-          {/* Poor photo quality warning */}
+          {}
           {analysis.photo_quality === 'poor' && analysis.photo_quality_note && (
             <div style={{ fontSize: '12px', color: 'var(--muted)', marginBottom: '10px', fontStyle: 'italic' }}>
               Note: {analysis.photo_quality_note}
@@ -113,7 +113,7 @@ function PhotoAnalysisCard({ analysis }) {
         </>
       )}
 
-      {/* Disclaimer */}
+      {}
       <div style={{ fontSize: '11px', color: 'var(--muted)', background: 'var(--bg)', borderRadius: '6px', padding: '8px 10px', lineHeight: 1.5, borderLeft: '3px solid var(--border)' }}>
         ⚠️ {analysis.disclaimer}
       </div>
@@ -139,7 +139,7 @@ export default function CheckinResult() {
 
   return (
     <div>
-      {/* Hero */}
+      {}
       <div className="result-hero">
         <div style={{ fontSize: '11px', color: 'rgba(255,255,255,.4)', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '8px' }}>
           Check-in complete
@@ -163,7 +163,7 @@ export default function CheckinResult() {
       </div>
 
       <div className="container-md">
-        {/* Agent results */}
+        {}
         <div className="card" style={{ marginBottom: '18px' }}>
           <div className="sec-label">Agent results</div>
           <div className="agent-row">
@@ -192,10 +192,10 @@ export default function CheckinResult() {
           </div>
         </div>
 
-        {/* Photo analysis card */}
+        {}
         <PhotoAnalysisCard analysis={result.photo_analysis} />
 
-        {/* Risk alert */}
+        {}
         {showAlert && (
           <div className="card-warn" style={{ marginBottom: '18px' }}>
             <div style={{ fontSize: '13px', fontWeight: 700, color: '#7A4A00', marginBottom: '6px', display: 'flex', alignItems: 'center', gap: '6px' }}>

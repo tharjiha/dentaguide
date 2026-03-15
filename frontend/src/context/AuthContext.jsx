@@ -8,8 +8,6 @@ export function AuthProvider({ children }) {
   const [accessToken, setAccessToken] = useState(() => localStorage.getItem('dg_token'));
   const [isLoggedIn, setIsLoggedIn]   = useState(false);
   const [loading, setLoading]         = useState(true);
-
-  // On mount — verify any stored token
   useEffect(() => {
     const stored = localStorage.getItem('dg_token');
     if (!stored) {

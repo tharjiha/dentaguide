@@ -32,18 +32,15 @@ export default function EditProfile() {
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState('');
 
-  // Load real profile on mount
   useEffect(() => {
     if (!accessToken) return;
     getMyProfile(accessToken)
       .then(profile => {
         const profileConditions = profile.conditions || [];
-        // Mark standard conditions as selected if they're in the profile
         setConditions(ALL_CONDITIONS.map(c => ({
           ...c,
           sel: profileConditions.includes(c.label),
         })));
-        // Any conditions not in ALL_CONDITIONS are custom
         const knownLabels = ALL_CONDITIONS.map(c => c.label);
         const custom = profileConditions
           .filter(c => !knownLabels.includes(c))

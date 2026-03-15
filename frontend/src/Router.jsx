@@ -28,18 +28,18 @@ function ProtectedRoute({ children }) {
 export default function Router() {
   return (
     <Routes>
-      {/* Public */}
+      {}
       <Route path="/"        element={<Landing />} />
       <Route path="/login"   element={<Login />} />
       <Route path="/signup"  element={<Signup />} />
       <Route path="/forgot"  element={<ForgotPassword />} />
 
-      {/* Onboarding */}
+      {}
       <Route path="/profile/1" element={<ProfileSetup1 />} />
       <Route path="/profile/2" element={<ProfileSetup2 />} />
       <Route path="/profile/3" element={<ProfileSetup3 />} />
 
-      {/* App — protected */}
+      {}
       <Route path="/dashboard"  element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
       <Route path="/checkin"    element={<ProtectedRoute><Checkin /></ProtectedRoute>} />
       <Route path="/result"     element={<ProtectedRoute><CheckinResult /></ProtectedRoute>} />
@@ -49,12 +49,12 @@ export default function Router() {
       <Route path="/condition"  element={<ProtectedRoute><ConditionDetail /></ProtectedRoute>} />
       <Route path="/dentist"    element={<ProtectedRoute><DentistFinder /></ProtectedRoute>} />
 
-      {/* Account */}
+      {}
       <Route path="/settings"               element={<ProtectedRoute><Settings /></ProtectedRoute>} />
       <Route path="/settings/profile"       element={<ProtectedRoute><EditProfile /></ProtectedRoute>} />
       <Route path="/settings/notifications" element={<ProtectedRoute><Notifications /></ProtectedRoute>} />
 
-      {/* Fallback */}
+      {}
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );

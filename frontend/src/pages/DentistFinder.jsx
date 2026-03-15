@@ -17,7 +17,7 @@ export default function DentistFinder() {
       </div>
 
       <div className="container-md">
-        {/* Risk banner */}
+        {}
         <div className="card-warn" style={{ marginBottom: '22px', display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
           <WarnIcon size={18} color="#9A6200" />
           <div>
@@ -28,13 +28,13 @@ export default function DentistFinder() {
           </div>
         </div>
 
-        {/* Search */}
+        {}
         <div className="form-group" style={{ marginBottom: '18px' }}>
           <label className="form-label">Search by postal code or neighbourhood</label>
           <input className="form-input" placeholder="e.g. M5V or King West" defaultValue="M5V" />
         </div>
 
-        {/* Dentist cards */}
+        {}
         {DENTISTS.map(d => (
           <div className="dentist-card" key={d.name}>
             <div className="dentist-logo">

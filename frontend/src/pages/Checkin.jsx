@@ -25,8 +25,6 @@ export default function Checkin() {
   const [streak, setStreak] = useState(null);
 
   const today = new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
-
-  // Check if already checked in today + get latest streak
   useEffect(() => {
     if (!accessToken) return;
     Promise.all([
@@ -56,8 +54,8 @@ export default function Checkin() {
         brushed,
         flossed,
         mouthwash,
-        sugar_intake: sugar,          // "Low" | "Med" | "High" — matches your schema
-        symptoms,                     // plain strings, matches your schema
+        sugar_intake: sugar,          
+        symptoms,                  
         photo_base64: photoBase64 || null,
       };
       console.log('Submitting payload:', payload);
@@ -89,7 +87,7 @@ export default function Checkin() {
 
   return (
     <div>
-      {/* Hero */}
+      {}
       <div className="hero-dark" style={{ padding: '28px 32px' }}>
         <div className="hero-inner" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div>
@@ -125,7 +123,7 @@ export default function Checkin() {
       ) : (
         <div className="container">
           <div className="two-col">
-            {/* LEFT — habits + symptoms */}
+            {}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
               <div className="card">
                 <div className="sec-label">Today's habits</div>
@@ -162,7 +160,7 @@ export default function Checkin() {
               </div>
             </div>
 
-            {/* RIGHT — photo + submit */}
+            {}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
               <div className="card">
                 <div className="sec-label">Photo (optional)</div>

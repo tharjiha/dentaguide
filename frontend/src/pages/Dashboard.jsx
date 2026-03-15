@@ -94,7 +94,7 @@ export default function Dashboard() {
   return (
     <div>
 
-      {/* ── Hero ── */}
+      {}
       <div className="hero-dark">
         <div className="hero-inner" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '24px', flexWrap: 'wrap' }}>
           <div>
@@ -146,13 +146,13 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* ── Body ── */}
+      {}
       <div className="container" style={{ display: 'grid', gridTemplateColumns: '1fr 300px', gap: '24px', paddingTop: '32px' }}>
 
-        {/* ── Left column ── */}
+        {}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
 
-          {/* Today's check-in summary */}
+          {}
           {today ? (
             <div className="card" style={{ borderLeft: '4px solid var(--teal)', borderRadius: '0 12px 12px 0' }}>
               <div className="sec-label" style={{ marginBottom: '12px' }}>Today's check-in</div>
@@ -217,7 +217,7 @@ export default function Dashboard() {
             </div>
           )}
 
-          {/* Conditions */}
+          {}
           {profile?.conditions?.length > 0 && (
             <div>
               <div className="sec-label" style={{ marginBottom: '10px' }}>Your tracked conditions</div>
@@ -249,7 +249,7 @@ export default function Dashboard() {
             </div>
           )}
 
-          {/* Recent photos */}
+          {}
           <div className="card" style={{ padding: '18px 20px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
               <div style={{ fontSize: '13px', fontWeight: 700, color: 'var(--navy)' }}>Recent photos</div>
@@ -309,7 +309,7 @@ export default function Dashboard() {
             )}
           </div>
 
-          {/* Onboarding nudge */}
+          {}
           {!profile?.onboarding_complete && (
             <div className="card-warn" style={{ marginTop: '4px' }}>
               <div style={{ fontSize: '14px', fontWeight: 700, color: '#7A4A00', marginBottom: '8px' }}>
@@ -329,10 +329,10 @@ export default function Dashboard() {
           )}
         </div>
 
-        {/* ── Sidebar ── */}
+        {}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
 
-          {/* Coach tip */}
+          {}
           <div className="card" style={{ background: 'var(--navy)' }}>
             <div className="sec-label" style={{ color: 'var(--teal)', marginBottom: '12px' }}>
               <CoachIcon /> Coach tip
@@ -342,7 +342,7 @@ export default function Dashboard() {
             </div>
           </div>
 
-          {/* Stats */}
+          {}
           {trends && trends.total_checkins > 0 && (
             <div className="card card-sm">
               <div style={{ fontSize: '13px', fontWeight: 700, color: 'var(--navy)', marginBottom: '14px' }}>
