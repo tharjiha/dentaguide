@@ -8,11 +8,10 @@ load_dotenv()
 
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
-# Models tried in order — falls back if one is rate-limited or unavailable
 GEMINI_MODELS = [
-    "gemini-3.1-flash-lite-preview",   # preferred — fastest, cost-efficient, multimodal
-    "gemini-1.5-flash-latest",          # fallback if quota exhausted
-    "gemini-1.5-flash-8b",              # last resort
+    "gemini-3.1-flash-lite-preview",   
+    "gemini-1.5-flash-latest",          
+    "gemini-1.5-flash-8b",              
 ]
 
 def _model_url(model: str) -> str:
@@ -132,16 +131,15 @@ async def analyze_photo(photo_base64: str, profile: dict = None, history: list =
             "topP": 0.8,
             "maxOutputTokens": 1024,
             "thinkingConfig": {
-                "thinkingBudget": 0  # disable thinking for fast photo analysis
+                "thinkingBudget": 0  
             }
         },
     }
 
     last_error = None
 
-    # Try each model in order, with one retry on 429
     for model in GEMINI_MODELS:
-        for attempt in range(2):  # 2 attempts per model
+        for attempt in range(2):  
             try:
                 print(f"[photo_agent] Trying model={model} attempt={attempt+1}")
                 res = await _call_gemini(model, request_payload)
@@ -149,7 +147,6 @@ async def analyze_photo(photo_base64: str, profile: dict = None, history: list =
 
                 if res.status_code == 429:
                     data = res.json()
-                    # Extract retry delay if provided
                     retry_delay = 30
                     try:
                         details = data.get("error", {}).get("details", [])
@@ -167,14 +164,13 @@ async def analyze_photo(photo_base64: str, profile: dict = None, history: list =
                     else:
                         last_error = f"Rate limited on {model}"
                         print(f"[photo_agent] Still rate limited after retry, trying next model")
-                        break  # Try next model
+                        break  
 
                 if res.status_code != 200:
                     last_error = f"HTTP {res.status_code}: {res.text[:200]}"
                     print(f"[photo_agent] Error: {last_error}")
-                    break  # Try next model
+                    break 
 
-                # Success — parse response
                 data = res.json()
                 raw_text = data["candidates"][0]["content"]["parts"][0]["text"]
                 print(f"[photo_agent] Success with {model}. Raw: {raw_text[:200]}...")
@@ -193,7 +189,7 @@ async def analyze_photo(photo_base64: str, profile: dict = None, history: list =
             except json.JSONDecodeError as e:
                 print(f"[photo_agent] JSON parse error on {model}: {e}")
                 last_error = f"JSON parse error: {e}"
-                break  # Bad response from this model, try next
+                break  
             except Exception as e:
                 print(f"[photo_agent] Exception on {model} attempt {attempt+1}: {e}")
                 last_error = str(e)
@@ -202,7 +198,6 @@ async def analyze_photo(photo_base64: str, profile: dict = None, history: list =
                     continue
                 break
 
-    # All models failed
     raise ValueError(f"All Gemini models failed. Last error: {last_error}")
 
 

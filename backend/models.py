@@ -3,7 +3,6 @@ from typing import Optional
 from pydantic import BaseModel, Field
 
 
-# ── Onboarding Step 1 — Dental background ────────────────────────────────────
 
 class DentalBackground(BaseModel):
     age: int = Field(..., gt=0, lt=130)
@@ -13,7 +12,6 @@ class DentalBackground(BaseModel):
     previous_treatments: Optional[str] = None
 
 
-# ── Onboarding Step 2 — Conditions ───────────────────────────────────────────
 
 class ConditionsPayload(BaseModel):
     conditions: list[str] = Field(
@@ -23,7 +21,6 @@ class ConditionsPayload(BaseModel):
     )
 
 
-# ── Onboarding Step 3 — Health history ───────────────────────────────────────
 
 class HealthHistory(BaseModel):
     ongoing_issues:     Optional[str] = None
@@ -33,7 +30,6 @@ class HealthHistory(BaseModel):
     dental_habits:      Optional[str] = None
 
 
-# ── Full profile read model ───────────────────────────────────────────────────
 
 class ProfileOut(BaseModel):
     user_id: str
@@ -51,7 +47,6 @@ class ProfileOut(BaseModel):
     onboarding_complete: bool                = False
 
 
-# ── Profile create (from feat/daily-check-in) ─────────────────────────────────
 
 class ProfileCreate(BaseModel):
     full_name: str
@@ -66,7 +61,6 @@ class ProfileCreate(BaseModel):
     medications: Optional[str] = None
 
 
-# ── Check-in payload (from feat/daily-check-in, used by /api/checkin) ─────────
 
 class CheckinPayload(BaseModel):
     brushed: bool
@@ -77,7 +71,6 @@ class CheckinPayload(BaseModel):
     photo_base64: Optional[str] = None
 
 
-# ── Check-in response ─────────────────────────────────────────────────────────
 
 class CheckinResponse(BaseModel):
     dental_score: int

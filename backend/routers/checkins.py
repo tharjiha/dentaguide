@@ -35,8 +35,6 @@ def _normalise(row: dict) -> dict:
     return row
 
 
-# ── GET /api/checkins/trends ──────────────────────────────────────────────────
-
 @router.get("/trends")
 def get_trends(
     days: int = 30,
@@ -94,10 +92,7 @@ def get_trends(
     avg_habit   = round(sum(habit_scores)  / len(habit_scores),  1) if habit_scores  else 0
     avg_dental  = round(sum(dental_scores) / len(dental_scores), 1) if dental_scores else 0
 
-    # Latest streak value (most recent row)
     latest_streak = rows[-1].get("streak") or 0
-
-    # Symptom frequency (% of check-ins where symptom appeared)
     symptom_counts: dict[str, int] = {}
     for r in rows:
         for s in r.get("symptoms") or []:
@@ -107,7 +102,6 @@ def get_trends(
         for k, v in sorted(symptom_counts.items(), key=lambda x: -x[1])
     }
 
-    # Risk breakdown using risk_severity
     risk_breakdown = {"none": 0, "low": 0, "medium": 0, "high": 0}
     for r in rows:
         level = (r.get("risk_severity") or "none").lower()
@@ -115,7 +109,6 @@ def get_trends(
             level = "none"
         risk_breakdown[level] += 1
 
-    # Daily rows for charts — include date label from created_at
     daily = []
     for r in rows:
         created = r.get("created_at", "")
@@ -148,7 +141,6 @@ def get_trends(
     }
 
 
-# ── GET /api/checkins/today ───────────────────────────────────────────────────
 
 @router.get("/today")
 def get_today(user_id: str = Depends(get_current_user_id)):
@@ -172,7 +164,6 @@ def get_today(user_id: str = Depends(get_current_user_id)):
     return _normalise(res.data[0])
 
 
-# ── GET /api/checkins/history ─────────────────────────────────────────────────
 
 @router.get("/history")
 def get_history(

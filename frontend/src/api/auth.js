@@ -11,7 +11,6 @@ const post = async (path, data) => {
   return json;
 };
 
-/** Register a new account. Returns { user, access_token, refresh_token } */
 export const register = ({ firstName, lastName, email, password }) =>
   post('/api/auth/register', {
     first_name: firstName,
@@ -20,14 +19,11 @@ export const register = ({ firstName, lastName, email, password }) =>
     password,
   });
 
-/** Sign in. Returns { user, access_token, refresh_token } */
 export const login = ({ email, password }) =>
   post('/api/auth/login', { email, password });
 
-/** Invalidate the session on the server. */
 export const logout = (accessToken) =>
   post('/api/auth/logout', { access_token: accessToken });
 
-/** Verify a stored token and return the current user. */
 export const getMe = (accessToken) =>
   post('/api/auth/me', { access_token: accessToken });

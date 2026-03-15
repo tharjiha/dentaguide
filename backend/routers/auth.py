@@ -4,9 +4,6 @@ from db import get_supabase
 
 router = APIRouter()
 
-
-# ── Request models ─────────────────────────────────────────────────────────────
-
 class RegisterRequest(BaseModel):
     first_name: str
     last_name: str
@@ -23,8 +20,6 @@ class TokenRequest(BaseModel):
     access_token: str
 
 
-# ── POST /api/auth/register ───────────────────────────────────────────────────
-
 @router.post("/register", status_code=status.HTTP_201_CREATED)
 def register(body: RegisterRequest):
     """
@@ -32,8 +27,6 @@ def register(body: RegisterRequest):
     Returns the session (access_token + refresh_token) on success.
     """
     sb = get_supabase()
-
-    # 1. Create the auth user
     try:
         res = sb.auth.sign_up({
             "email": body.email,
@@ -52,8 +45,6 @@ def register(body: RegisterRequest):
         raise HTTPException(status_code=400, detail="Registration failed")
 
     user_id = res.user.id
-
-    # 2. Seed an empty profiles row so GET /profile/{user_id} always works
     sb.table("profiles").upsert(
         {"user_id": user_id, "onboarding_complete": False},
         on_conflict="user_id",
@@ -70,8 +61,6 @@ def register(body: RegisterRequest):
         "refresh_token": res.session.refresh_token if res.session else None,
     }
 
-
-# ── POST /api/auth/login ──────────────────────────────────────────────────────
 
 @router.post("/login")
 def login(body: LoginRequest):
@@ -106,8 +95,6 @@ def login(body: LoginRequest):
     }
 
 
-# ── POST /api/auth/logout ─────────────────────────────────────────────────────
-
 @router.post("/logout", status_code=status.HTTP_204_NO_CONTENT)
 def logout(body: TokenRequest):
     """Invalidate the user's session on the Supabase side."""
@@ -115,11 +102,9 @@ def logout(body: TokenRequest):
     try:
         sb.auth.admin.sign_out(body.access_token)
     except Exception:
-        pass   # best-effort; frontend should clear tokens regardless
+        pass   
     return None
 
-
-# ── GET /api/auth/me ──────────────────────────────────────────────────────────
 
 @router.get("/me")
 def get_me(body: TokenRequest):

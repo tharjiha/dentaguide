@@ -7,7 +7,6 @@ from models import CheckinPayload
 
 app = FastAPI(title="DentaGuide API", version="1.0.0")
 
-# ── CORS ──────────────────────────────────────────────────────────────────────
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:5173"],
@@ -16,19 +15,16 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# ── Routers (from HEAD branch) ────────────────────────────────────────────────
 app.include_router(auth.router,     prefix="/api/auth",     tags=["auth"])
 app.include_router(profile.router,  prefix="/api/profile",  tags=["profile"])
 app.include_router(checkins.router, prefix="/api/checkins", tags=["checkins"])
 
 
-# ── Health ────────────────────────────────────────────────────────────────────
 @app.get("/")
 def root():
     return {"status": "ok", "service": "DentaGuide API"}
 
 
-# ── Check-in routes (from feat/daily-check-in branch) ────────────────────────
 
 @app.post("/api/checkin")
 async def submit_checkin(

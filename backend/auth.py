@@ -7,8 +7,6 @@ router = APIRouter()
 bearer = HTTPBearer()
 
 
-# ── Shared auth dependency (used by checkin routes from feat/daily-check-in) ──
-
 def get_current_user(
     creds: HTTPAuthorizationCredentials = Depends(bearer),
 ) -> str:
@@ -23,7 +21,6 @@ def get_current_user(
     return res.user.id
 
 
-# ── Request models ────────────────────────────────────────────────────────────
 
 class RegisterRequest(BaseModel):
     first_name: str
@@ -50,7 +47,6 @@ class ResetPasswordRequest(BaseModel):
     new_password: str
 
 
-# ── POST /api/auth/register ───────────────────────────────────────────────────
 
 @router.post("/register", status_code=status.HTTP_201_CREATED)
 def register(body: RegisterRequest):
@@ -101,7 +97,6 @@ def register(body: RegisterRequest):
     }
 
 
-# ── POST /api/auth/login ──────────────────────────────────────────────────────
 
 @router.post("/login")
 def login(body: LoginRequest):
@@ -130,7 +125,6 @@ def login(body: LoginRequest):
     }
 
 
-# ── POST /api/auth/logout ─────────────────────────────────────────────────────
 
 @router.post("/logout", status_code=status.HTTP_204_NO_CONTENT)
 def logout(body: TokenRequest):
@@ -142,7 +136,6 @@ def logout(body: TokenRequest):
     return None
 
 
-# ── POST /api/auth/me ─────────────────────────────────────────────────────────
 
 @router.post("/me")
 def get_me(body: TokenRequest):
@@ -164,7 +157,6 @@ def get_me(body: TokenRequest):
     }
 
 
-# ── POST /api/auth/forgot-password ───────────────────────────────────────────
 
 @router.post("/forgot-password", status_code=status.HTTP_200_OK)
 def forgot_password(body: ForgotPasswordRequest):
@@ -179,7 +171,6 @@ def forgot_password(body: ForgotPasswordRequest):
     return {"message": "If that email exists, a reset link has been sent."}
 
 
-# ── POST /api/auth/reset-password ────────────────────────────────────────────
 
 @router.post("/reset-password", status_code=status.HTTP_200_OK)
 def reset_password(body: ResetPasswordRequest):

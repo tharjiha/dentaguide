@@ -4,7 +4,6 @@ async def run(payload, history: list) -> dict:
     mouthwash = payload.mouthwash
     sugar = payload.sugar_intake
 
-    # Score out of 10
     score = 0
     if brushed: score += 4
     if flossed: score += 3
@@ -12,7 +11,6 @@ async def run(payload, history: list) -> dict:
     if sugar == "low": score += 2
     elif sugar == "medium": score += 1
 
-    # Calculate streak from history
     streak = 0
     for checkin in reversed(history):
         if checkin.get("brushed"):

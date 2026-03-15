@@ -8,8 +8,6 @@ router = APIRouter()
 bearer = HTTPBearer()
 
 
-# ── Auth dependency ────────────────────────────────────────────────────────────
-
 def get_current_user_id(
     creds: HTTPAuthorizationCredentials = Depends(bearer),
 ) -> str:
@@ -27,7 +25,6 @@ def get_current_user_id(
     return res.user.id
 
 
-# ── helpers ───────────────────────────────────────────────────────────────────
 
 def _normalise(data: dict) -> dict:
     if isinstance(data.get("conditions"), str):
@@ -47,7 +44,6 @@ def _upsert(user_id: str, patch: dict) -> dict:
     return _normalise(res.data[0])
 
 
-# ── GET /api/profile/me ───────────────────────────────────────────────────────
 
 @router.get("/me", response_model=ProfileOut)
 def get_my_profile(user_id: str = Depends(get_current_user_id)):
@@ -58,7 +54,6 @@ def get_my_profile(user_id: str = Depends(get_current_user_id)):
     return ProfileOut(**_normalise(res.data))
 
 
-# ── POST /api/profile/step1 ───────────────────────────────────────────────────
 
 @router.post("/step1", response_model=ProfileOut, status_code=status.HTTP_200_OK)
 def save_step1(payload: DentalBackground, user_id: str = Depends(get_current_user_id)):
@@ -72,7 +67,6 @@ def save_step1(payload: DentalBackground, user_id: str = Depends(get_current_use
     return ProfileOut(**data)
 
 
-# ── POST /api/profile/step2 ───────────────────────────────────────────────────
 
 @router.post("/step2", response_model=ProfileOut, status_code=status.HTTP_200_OK)
 def save_step2(payload: ConditionsPayload, user_id: str = Depends(get_current_user_id)):
@@ -80,7 +74,6 @@ def save_step2(payload: ConditionsPayload, user_id: str = Depends(get_current_us
     return ProfileOut(**data)
 
 
-# ── POST /api/profile/step3 ───────────────────────────────────────────────────
 
 @router.post("/step3", response_model=ProfileOut, status_code=status.HTTP_200_OK)
 def save_step3(payload: HealthHistory, user_id: str = Depends(get_current_user_id)):
@@ -95,7 +88,6 @@ def save_step3(payload: HealthHistory, user_id: str = Depends(get_current_user_i
     return ProfileOut(**data)
 
 
-# ── PATCH /api/profile/me ─────────────────────────────────────────────────────
 
 @router.patch("/me", response_model=ProfileOut)
 def update_my_profile(patch: dict, user_id: str = Depends(get_current_user_id)):

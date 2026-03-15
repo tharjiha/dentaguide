@@ -8,7 +8,6 @@ async def run(payload, profile: dict, history: list) -> dict:
     conditions = profile.get("conditions", [])
     genetic_risk = profile.get("genetic_risk", "none")
 
-    # Build history summary — last 14 days
     recent = history[-14:] if len(history) >= 14 else history
     history_summary = []
     for c in recent:

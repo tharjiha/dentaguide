@@ -8,12 +8,10 @@ async def run_pipeline(payload, profile: dict, history: list) -> dict:
     Run all agents. Photo agent now receives full user context.
     """
 
-    # ── Run habit agent + photo agent in parallel ─────────────────────────────
     has_photo = bool(getattr(payload, "photo_base64", None))
     tasks     = [habit_agent.run(payload, history)]
 
     if has_photo:
-        # Pass profile, history, and payload so Gemini has full context
         tasks.append(
             analyze_photo(
                 photo_base64=payload.photo_base64,
@@ -38,7 +36,6 @@ async def run_pipeline(payload, profile: dict, history: list) -> dict:
         else:
             photo_analysis = results[1]
 
-    # ── Derive risk ───────────────────────────────────────────────────────────
     symptoms   = list(payload.symptoms or [])
     sugar      = getattr(payload, "sugar_intake", "Low")
     conditions = profile.get("conditions") or []
@@ -52,7 +49,6 @@ async def run_pipeline(payload, profile: dict, history: list) -> dict:
     recent           = history[:14]
     recent_high_sugar = sum(1 for r in recent if (r.get("sugar_intake") or "").title() == "High")
 
-    # Photo-derived risk
     photo_risk  = "none"
     risk_order  = ["none", "low", "medium", "high"]
     if photo_analysis:
@@ -60,7 +56,6 @@ async def run_pipeline(payload, profile: dict, history: list) -> dict:
         action_risk = recommended_action_to_risk(photo_analysis.get("recommended_action", "none"))
         photo_risk  = risk_order[max(risk_order.index(photo_risk), risk_order.index(action_risk))]
 
-    # Symptom-based risk
     risk_flags    = []
     risk_severity = "none"
     if len(high_risk_syms) >= 2 or (high_risk_syms and sugar == "High"):
@@ -70,11 +65,8 @@ async def run_pipeline(payload, profile: dict, history: list) -> dict:
     elif warn_syms or sugar == "High" or recent_high_sugar >= 5:
         risk_severity = "low"
 
-    # Escalate if photo found something worse
     if photo_risk in risk_order and risk_order.index(photo_risk) > risk_order.index(risk_severity):
         risk_severity = photo_risk
-
-    # Build flags
     if high_risk_syms:
         risk_flags.append(f"Symptoms: {', '.join(high_risk_syms)}")
     if warn_syms:
@@ -86,11 +78,9 @@ async def run_pipeline(payload, profile: dict, history: list) -> dict:
     if photo_analysis:
         for concern in (photo_analysis.get("areas_of_concern") or []):
             risk_flags.append(f"Photo: {concern}")
-        # Also surface context-matched findings
         for finding in (photo_analysis.get("context_matched_findings") or []):
             risk_flags.append(f"Context: {finding}")
 
-    # Risk explanation
     if risk_severity == "none":
         risk_explanation = "No risk indicators today. Great habits!"
     elif risk_severity == "low":
@@ -110,7 +100,6 @@ async def run_pipeline(payload, profile: dict, history: list) -> dict:
             "A dental check-up is recommended."
         )
 
-    # ── Coach tip — prioritises photo context-matched findings ────────────────
     brushed   = getattr(payload, "brushed",   False)
     flossed   = getattr(payload, "flossed",   False)
     mouthwash = getattr(payload, "mouthwash", False)
@@ -119,7 +108,6 @@ async def run_pipeline(payload, profile: dict, history: list) -> dict:
     areas_of_concern = (photo_analysis or {}).get("areas_of_concern") or []
 
     if context_findings:
-        # Most personalised — finding matches a known condition
         finding = context_findings[0].lower()
         if "gum" in finding or "bleed" in finding or "gingivitis" in finding:
             coach_tip = (
@@ -173,7 +161,6 @@ async def run_pipeline(payload, profile: dict, history: list) -> dict:
         coach_tip = "Every habit you build now prevents costly treatment later. Small consistent steps make the biggest difference."
 
     
-    # ── Photo result field ────────────────────────────────────────────────────
     photo_result = None
     if photo_analysis:
         photo_result = {
