@@ -2,8 +2,6 @@
 
 **Daily dental health monitoring, powered by agentic AI.**
 
-Submitted to [Gen AI Genesis 2026](https://devpost.com/software/dentaguide#updates).
-
 ---
 
 ## Why we built this
@@ -12,7 +10,7 @@ Dental disease is almost entirely preventable, but only if you catch it early. M
 
 This hits hardest for people without dental insurance. No coverage means no routine cleanings, no early warnings, and small problems that quietly become expensive ones.
 
-DentaGuide is that feedback loop. Under 60 seconds a day, it tracks your habits, symptoms, and weekly photos to catch risk patterns before they develop into something serious. For Sun Life members, it connects directly to a covered dentist when something needs attention. For everyone else, it gives them the early awareness that used to require a check-up they couldn't afford.
+DentaGuide is that tool. Under 60 seconds a day, it tracks your habits, symptoms, and weekly photos to catch risk patterns before they develop into something serious. 
 
 ---
 
