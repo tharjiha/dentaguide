@@ -1,8 +1,8 @@
-# DentaGuide 🦷
+# DentaGuide 🦷🤖
 
 **Daily dental health monitoring, powered by agentic AI.**
 
-Submitted to Gen AI Genesis 2026 Hackathon.
+Submitted to [Gen AI Genesis 2026](https://devpost.com/software/dentaguide#updates).
 
 ---
 
